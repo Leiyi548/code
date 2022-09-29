@@ -1,22 +1,47 @@
 package main
 
-func convert(s string, numRows int) string {
-	n := len(s)
-	var rows [][]byte
-	dir := 1
-	row := 0
-	col := 0
-	varNum := 0
-	for i := 0; i < n; i++ {
-		rows[row][col] = s[i]
-		row++
-		col++
-		if row == numRows {
+import (
+	"fmt"
+	"strings"
+)
 
+// more information please see https://leetcode.cn/problems/zigzag-conversion/solution/by-chao-yue-2-l2wn/
+func convert02(s string, numRows int) string {
+	if len(s) <= 2 {
+		return s
+	}
+	if numRows <= 1 {
+		return s
+	}
+	sArray := make([][]string, numRows, numRows)
+	index := 0
+	// flag为1代表向下，-1代表向上
+	flag := 1
+	for i := 0; i < len(s); i++ {
+		char := s[i : i+1]
+		sArray[index] = append(sArray[index], char)
+		if flag == 1 {
+			index++
+		} else {
+			index--
+		}
+		if index == numRows-1 {
+			flag = -1
+		} else if index == 0 {
+			flag = 1
 		}
 	}
+	// arr := make([]string,0,10)
+	var arr []string
+	for j := 0; j < len(sArray); j++ {
+		arr = append(arr, sArray[j]...)
+	}
+	result := strings.Join(arr, "")
+	return string(result)
 }
 
 func main() {
-
+	s := "PAYPALISHIRING"
+	numRows := 3
+	fmt.Println(convert02(s, numRows))
 }
