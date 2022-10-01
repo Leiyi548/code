@@ -20,18 +20,20 @@ func convert02(s string, numRows int) string {
 	for i := 0; i < len(s); i++ {
 		char := s[i : i+1]
 		sArray[index] = append(sArray[index], char)
+		// 根据 flag 来判断方向
 		if flag == 1 {
 			index++
 		} else {
 			index--
 		}
+		//改变flag方向
 		if index == numRows-1 {
 			flag = -1
 		} else if index == 0 {
 			flag = 1
 		}
 	}
-	// arr := make([]string,0,10)
+	//将数组转换成字符串
 	var arr []string
 	for j := 0; j < len(sArray); j++ {
 		arr = append(arr, sArray[j]...)

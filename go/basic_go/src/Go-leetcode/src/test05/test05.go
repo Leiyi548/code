@@ -31,39 +31,6 @@ func isPalindrome(s string) bool {
 	return true
 }
 
-// 动态规划
-func longestPalindrome03(s string) string {
-	n := len(s)
-	if n < 2 {
-		return s
-	}
-	maxSubStr := ""
-	maxLen := 0
-	var dp [1000][1000]bool
-	// 初始化动态规划的条件
-	// 所有长度为1的子串都是回文串
-	for i := 0; i < n; i++ {
-		dp[i][i] = true
-	}
-	for col := 1; col < n; col++ {
-		for row := 0; row <= col; row++ {
-			if s[row] == s[col] {
-				if col-row == 1 {
-					dp[row][col] = true
-				}
-				if dp[row+1][col-1] {
-					dp[row][col] = true
-				}
-			}
-			if dp[row][col] && col-row+1 > maxLen {
-				maxLen = col - row + 1
-				maxSubStr = s[row : col+1]
-			}
-		}
-	}
-	return maxSubStr
-}
-
 // 中心扩散
 func longestPalindrome02(s string) string {
 	start, end := 0, 0
@@ -88,8 +55,38 @@ func expandAroundCenter(s string, left, right int) (int, int) {
 	return left + 1, right - 1
 }
 
+// 动态规划
+func longestPalindrome03(s string) string {
+	n := len(s)
+	if n < 2 {
+		return s
+	}
+	maxSubStr := ""
+	maxLen := 0
+	var dp [1001][1001]bool
+	// 初始化动态规划的条件
+	// 所有长度为1的子串都是回文串
+	for i := 0; i < n; i++ {
+		dp[i][i] = true
+	}
+	for col := 1; col < n; col++ {
+		for row := 0; row <= col; row++ {
+			if s[row] == s[col] {
+				if (col-row == 1) || dp[row+1][col-1] {
+					dp[row][col] = true
+				}
+			}
+			if dp[row][col] && col-row+1 > maxLen {
+				maxLen = col - row + 1
+				maxSubStr = s[row : col+1]
+			}
+		}
+	}
+	return maxSubStr
+}
+
 func main() {
-	s := "acbdb"
+	s := "bb"
 	//fmt.Println(longestPalindrome01(s))
 	fmt.Println(longestPalindrome02(s))
 	fmt.Println(longestPalindrome03(s))

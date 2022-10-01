@@ -33,8 +33,14 @@ func neoModifyString() {
 }
 
 func readString() {
-	s := "abcdef"
-	fmt.Printf("%c\n", s[1])
+	res := 0
+	s := "12345"
+	// fmt.Printf("%c\n", s[1])
+	for _, tmp := range s {
+		res = res*10 + int(tmp-'0')
+		fmt.Println(tmp - '0')
+	}
+	fmt.Println(res)
 }
 
 func main() {
