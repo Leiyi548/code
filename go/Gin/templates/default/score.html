@@ -1,0 +1,71 @@
+{{define "default/score.html"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{.title}}</title>
+    <style>
+      h1 {
+        text-align: center;
+        color: green;
+      }
+      p {
+        color: red;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>gin —— htmlPage</h1>
+    <h1>{{.title}}</h1>
+    <div class="container">
+      <!-- 定义变量 -->
+      {{ $t := .title }}
+      <br />
+
+      <h4>{{$t}}</h4>
+
+      <!-- 条件判断 -->
+      <!-- 
+      eq 如果 arg1 == arg2 则返回真
+      ne 如果 arg1 != arg2 则返回真
+      lt 如果 arg1 < arg2 则返回真
+      le 如果 arg1 <= arg2 则返回真
+      gt 如果 arg1 > arg2 则返回真
+      ge 如果 arg1 >= arg2 则返回真
+     -->
+
+      {{ if ge .student.Score 60}}
+      <p>及格</p>
+      {{ else}}
+      <p>不及格</p>
+      {{ end }}
+
+      <!-- 循环遍历数据 -->
+      <ul>
+        {{range $key,$value:=.student.Todo}}
+        <li>{{$key}}---{{$value}}</li>
+        {{end}}
+      </ul>
+
+      <!-- with 解构体 -->
+      {{ with .student}} {{.Name}} {{.Year}} {{.Score}} {{.Desc}} {{ end }}
+
+      <br />
+      <!-- 预定义函数 -->
+      {{len .title}}
+      <br />
+      <!-- 自定义模板函数  -->
+      {{print .student.Name}}
+    </div>
+  </body>
+</html>
+{{ end }}
