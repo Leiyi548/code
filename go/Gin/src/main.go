@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/xml"
 	"fmt"
 	"net/http"
 	"text/template"
+
+	"ginStudy/src/routers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,9 +23,21 @@ type UserInfo struct {
 	Age      int    `json:"age" form:"age"`
 }
 
+type Book struct {
+	Title   string `json:"title" xml:"title"`
+	Content string `json:"content" xml:"content"`
+	Desc    string `json:"description" xml:"description"`
+}
+
 func print(s1, s2 string) string {
 	fmt.Print(s1, s2)
 	return s1 + "---" + s2
+}
+
+func initMiddleware(c *gin.Context) {
+	fmt.Println("全局中间件 通过 r.Use配置")
+	// 调用该请求的剩余处理程序
+	c.Next()
 }
 
 func main() {
@@ -34,6 +49,9 @@ func main() {
 
 	// 配置静态服务
 	r.Static("static", "./static")
+
+	// 配置全局中间件
+	r.Use(initMiddleware)
 
 	// 自定义模板函数 注意把这个全局函数加在加载模板前
 	r.SetFuncMap(template.FuncMap{
@@ -193,6 +211,23 @@ func main() {
 		}
 	})
 
+	// 获取 xml 信息
+	r.POST("/xml", func(c *gin.Context) {
+		book := &Book{}
+
+		xmlSliceData, _ := c.GetRawData()
+
+		if err := xml.Unmarshal(xmlSliceData, &book); err == nil {
+			c.JSON(http.StatusOK, book)
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"err": err.Error(),
+			})
+		}
+	})
+
+	// 分组路由
+	routers.UserRoutersInit(r)
 
 	// 默认是在8080
 	// r.Run() // 监听并在 0.0.0.0:8080 上启动服务

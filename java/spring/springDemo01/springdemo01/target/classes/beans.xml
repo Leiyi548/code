@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="hello" class="org.learn.pojo.Hello">
+        <property name="name" value="spring"/>
+    </bean>
+
+    <!-- 配置mysql那些dao -->
+    <bean id="mysqlImpl" class="org.learn.dao.impl.UserDaoMysqelImpl"/>
+
+    <bean id="serviceImpl" class="org.learn.service.impl.UserServiceImpl">
+        <property name="userDao" ref="mysqlImpl"/>
+    </bean>
+
+    <!-- 通过构造函数    -->
+    <bean id="user" class="org.learn.pojo.User">
+        <property name="name" value="ewell"/>
+    </bean>
+
+    <!-- 有三种写法    -->
+    <!-- 第一种根据index参数下标设置    -->
+    <bean id="userTIndex" class="org.learn.pojo.UserT">
+        <!--  index 指定参数，下标从0开始  -->
+        <constructor-arg index="0" value="ewellIndex"/>
+    </bean>
+    <!-- 第二种根据index参数下标设置    -->
+    <bean id="userTName" class="org.learn.pojo.UserT">
+        <!--  index 指定参数，下标从0开始  -->
+        <constructor-arg name="name" value="ewellName"/>
+    </bean>
+    <!-- 第三种根据参数类型下标设置    -->
+    <bean id="userTType" class="org.learn.pojo.UserT">
+        <!--  index 指定参数，下标从0开始  -->
+        <constructor-arg type="java.lang.String" value="ewellType"/>
+    </bean>
+
+
+    <!-- 设置别名 -->
+    <alias name="userTType" alias="TType"/>
+
+
+    <!-- 常量注人 -->
+    <bean id="studentTest" class="org.learn.pojo.Student">
+        <property name="name" value="小明"/>
+    </bean>
+
+    <bean id="studentAddress" class="org.learn.pojo.Address">
+        <property name="address" value="北京天安门"/>
+    </bean>
+
+    <bean id="student" class="org.learn.pojo.Student">
+        <property name="name" value="小明"/>
+        <property name="address" ref="studentAddress"/>
+        <property name="books">
+            <array>
+                <value>西游记</value>
+                <value>红楼梦</value>
+                <value>水浒传</value>
+                <value>三国演义</value>
+            </array>
+        </property>
+        <property name="hobbies">
+            <list>
+                <value>听歌</value>
+                <value>看电影</value>
+                <value>玩游戏</value>
+                <value>爬山</value>
+            </list>
+        </property>
+        <property name="card">
+            <map>
+                <entry key="中国邮政" value="456456456465456"/>
+                <entry key="建设" value="1456682255511"/>
+            </map>
+        </property>
+        <property name="games">
+            <set>
+                <value>LOL</value>
+                <value>BOB</value>
+                <value>COC</value>
+            </set>
+        </property>
+        <property name="wife">
+            <null/>
+        </property>
+        <property name="info">
+            <props>
+                <prop key="学号">20190604</prop>
+                <prop key="性别">男</prop>
+                <prop key="姓名">小明</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- P命名空间注入 : 需要在头文件中加入约束文件 -->
+    <!--P(属性: properties)命名空间 , 属性依然要设置set方法-->
+    <bean id="userP" class="org.learn.pojo.User" p:name="天下第一包B"
+          p:age="18"/>
+
+    <!--  C命名空间注入  -->
+    <!-- 导入约束 : xmlns:c="http://www.springframework.org/schema/c" -->
+    <bean id="userC" class="org.learn.pojo.User" c:name="天下第一包C"
+          c:age="18"/>
+
+    <!-- 自动装配 -->
+    <bean id="dog" class="org.learn.pojo.Dog"/>
+    <bean id="cat" class="org.learn.pojo.Cat"/>
+    <bean id="cat2" class="org.learn.pojo.Cat"/>
+
+    <bean id="masterTest" class="org.learn.pojo.Master">
+        <!-- 一定要有set方法 -->
+        <property name="cat" ref="cat"/>
+        <property name="dog" ref="dog"/>
+        <property name="str" value="ewell-master-origin"/>
+    </bean>
+
+    <!-- 自动装配-byName    -->
+    <bean id="masterByName" class="org.learn.pojo.Master" autowire="byName">
+        <!-- 一定要有set方法 -->
+        <property name="str" value="ewell-master-byname"/>
+    </bean>
+
+    <!-- 自动装配-byType    -->
+    <bean id="masterByType" class="org.learn.pojo.Master" autowire="byType">
+        <!-- 一定要有set方法 -->
+        <property name="str" value="ewell-master-byname"/>
+    </bean>
+
+</beans>
