@@ -129,5 +129,37 @@ public class SpringBeanTest {
         master.getCat().shout();
     }
 
+
+    @Test
+    public void testMasterCopyAutowired() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        MasterCopy masterCopy = (MasterCopy) context.getBean("masterAutowiredCopy");
+        masterCopy.getCat().shout();
+        masterCopy.getDog().shout();
+    }
+
+    @Test
+    public void testMasterCopyQualifier() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        MasterCopy2 masterQualifier = (MasterCopy2) context.getBean("masterQualifier");
+        masterQualifier.getDog().shout();
+        masterQualifier.getCat().shout();
+    }
+
+    @Test
+    public void testMasterResource() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        MasterResource masterResource = (MasterResource) context.getBean("masterResource");
+        masterResource.getDogResource().shout();
+        masterResource.getCatResource().shout();
+    }
+
+    @Test
+    public void testAnnotationTeacher01() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        Teacher teacher = (Teacher) context.getBean("teacher01");
+        teacher.show();
+    }
+
 }
 

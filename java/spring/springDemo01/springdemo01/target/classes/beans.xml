@@ -3,7 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:c="http://www.springframework.org/schema/c"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
     <bean id="hello" class="org.learn.pojo.Hello">
         <property name="name" value="spring"/>
     </bean>
@@ -107,7 +112,8 @@
     <!-- 自动装配 -->
     <bean id="dog" class="org.learn.pojo.Dog"/>
     <bean id="cat" class="org.learn.pojo.Cat"/>
-    <bean id="cat2" class="org.learn.pojo.Cat"/>
+    <!-- 删掉cat2，将cat的bean名称改掉！测试！因为是按类型装配，所以并不会报异常，也不影响最后的结果。甚至将id属性去掉，也不影响结果。-->
+    <!-- <bean id="cat2" class="org.learn.pojo.Cat" />-->
 
     <bean id="masterTest" class="org.learn.pojo.Master">
         <!-- 一定要有set方法 -->
@@ -127,5 +133,57 @@
         <!-- 一定要有set方法 -->
         <property name="str" value="ewell-master-byname"/>
     </bean>
+
+    <!-- 利用注解方式注入属性 -->
+    <!-- <context:annotation-config/> 个属性一定要写哦！-->
+    <!-- Autowired是根据类型自动装配 -->
+    <!-- 在Autowired的基础上加上Qualifier注解是根据name进行自动装配 -->
+    <!-- Qualifier不能单独使用 -->
+    <!-- <context:annotation-config/> 开启属性注解 -->
+    <context:annotation-config/>
+    <bean id="masterAutowiredCopy" class="org.learn.pojo.MasterCopy"/>
+
+    <context:annotation-config/>
+    <bean id="dogCopy1" class="org.learn.pojo.DogCopy2">
+        <property name="name" value="这是狗1"/>
+    </bean>
+    <bean id="catCopy1" class="org.learn.pojo.CatCopy2">
+        <property name="name" value="这是猫1"/>
+    </bean>
+    <bean id="dogCopy2" class="org.learn.pojo.DogCopy2">
+        <property name="name" value="这是狗2"/>
+    </bean>
+    <bean id="catCopy2" class="org.learn.pojo.CatCopy2">
+        <property name="name" value="这是猫2"/>
+    </bean>
+    <bean id="masterQualifier" class="org.learn.pojo.MasterCopy2"/>
+
+
+    <!-- @Resource注解 -->
+    <!-- 先按该属性进行byName方式查找装配； -->
+    <!-- 其次再进行默认的byName方式进行装配 -->
+    <!-- 如果以上都不成功，则按byType的方式自动装配 -->
+    <!-- 都不成功，则报异常。 -->
+    <!-- 可以组合使用一个有name按照byName进行装配，一个没有按照byType装配-->
+    <context:annotation-config/>
+    <bean id="catResource" class="org.learn.pojo.CatResource">
+        <property name="name" value="原始猫"/>
+    </bean>
+    <bean id="dogResource" class="org.learn.pojo.DogResource">
+        <property name="name" value="原始狗"/>
+    </bean>
+
+    <bean id="catResource01" class="org.learn.pojo.CatResource">
+        <property name="name" value="猫1"/>
+    </bean>
+    <bean id="dogResource01" class="org.learn.pojo.DogResource">
+        <property name="name" value="狗1"/>
+    </bean>
+    <bean id="masterResource" class="org.learn.pojo.MasterResource"/>
+
+
+    <!-- 使用注解开发 -->
+    <!--  扫描下面位置 -->
+    <context:component-scan base-package="org.learn.pojo"/>
 
 </beans>
