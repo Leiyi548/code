@@ -1,0 +1,19 @@
+# change port
+server:
+  port: 8000
+
+# yaml 注入数据
+person:
+  name: 包子
+  age: 69
+  happy: false
+  birth: 1953/6/15
+  maps: { k1:v1,k2:v2 }
+  lists:
+    - code
+    - girl
+    - music
+  dog:
+    name: 包子狗
+    age: 69
+
