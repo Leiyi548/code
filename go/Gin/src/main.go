@@ -8,6 +8,8 @@ import (
 
 	"ginStudy/src/routers"
 
+	"ginStudy/src/models"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -45,18 +47,26 @@ func main() {
 	r := gin.Default()
 
 	// r.LoadHTMLGlob("template/*")
-	r.LoadHTMLGlob("templates/**/*")
+	// ** 代表的是匹配任意文件夹
+	// * 匹配的是文件
+	r.LoadHTMLGlob("../templates/**/*")
 
 	// 配置静态服务
-	r.Static("static", "./static")
+  // 如果只打了static的话，那么我们可以直接访问到index.html
+  // 不需要设置一些其他的东西
+	r.Static("/static", "./static")
 
 	// 配置全局中间件
-	r.Use(initMiddleware)
+	// r.Use(initMiddleware)
 
 	// 自定义模板函数 注意把这个全局函数加在加载模板前
 	r.SetFuncMap(template.FuncMap{
-		"print": print,
+		"print":      print,
+		"unixToDate": models.GetUnix(),
 	})
+
+	// 为 multipart forms 设置较低的内存限制 (默认是 32 MiB)
+	r.MaxMultipartMemory = 32 << 20 // 32 MiB
 
 	r.GET("/ping", func(c *gin.Context) {
 		// 有json，string就不会显示了！
@@ -174,6 +184,14 @@ func main() {
 
 	r.GET("/default/user", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "default/user.html", gin.H{})
+	})
+
+	r.GET("/default/uploadMultipleFiles", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "default/uploadMultipleFiles.html", gin.H{})
+	})
+
+	r.GET("/default/uploadSingleFile", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "default/uploadSingleFile.html", gin.H{})
 	})
 
 	r.GET("/getUser", func(c *gin.Context) {
