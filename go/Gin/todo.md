@@ -1,4 +1,5 @@
 ## TODO
 
 - [x] single file upload
-- [ ] multiple file upload
+- [x] multiple file upload
+- [x] 设置 seesion 时间上传

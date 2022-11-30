@@ -59,16 +59,6 @@ func (UserController UserController) UploadSingleFile(c *gin.Context) {
 // 上传多个文件
 func (UserController UserController) UploadMultipleFiles(c *gin.Context) {
 	username := c.PostForm("username")
-	face1, err1 := c.FormFile("face1")
-	face2, err2 := c.FormFile("face2")
-	if err1 != nil {
-		c.String(http.StatusBadRequest, "get from err: %s", err1.Error())
-		return
-	}
-	if err2 != nil {
-		c.String(http.StatusBadRequest, "get from err: %s", err2.Error())
-		return
-	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "文件上传成功",

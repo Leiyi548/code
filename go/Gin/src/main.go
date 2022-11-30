@@ -52,8 +52,8 @@ func main() {
 	r.LoadHTMLGlob("../templates/**/*")
 
 	// 配置静态服务
-  // 如果只打了static的话，那么我们可以直接访问到index.html
-  // 不需要设置一些其他的东西
+	// 如果只打了static的话，那么我们可以直接访问到index.html
+	// 不需要设置一些其他的东西
 	r.Static("/static", "./static")
 
 	// 配置全局中间件
