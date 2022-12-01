@@ -1,0 +1,12 @@
+{
+  // files 选项用于设置需要编译的文件
+  // "files": ["src/1.greeter.ts"],
+  // include
+  "include": ["src/ts/*.ts", "src/ts/1.greeter.ts", "src/ts/1.greeter.ts"],
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "dist/js",
+    "removeComments": true
+  }
+}
