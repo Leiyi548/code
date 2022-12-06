@@ -1,7 +1,7 @@
 /*
  * @Author: Leiyi548
  * @Date: 2022-12-01 22:13:15
- * @LastEditTime: 2022-12-02 00:47:25
+ * @LastEditTime: 2022-12-02 16:19:37
  * @LastEditors: Leiyi548
  * @Description: 类
  * @FilePath: \typescript\src\ts\3.类.ts
@@ -148,3 +148,26 @@ class AccountingDepartment extends Department {
     console.log('Generating accounting reports...');
   }
 }
+
+let department: Department; // 允许创建一个对抽象类的引用
+// department = new Department(); // 错误；不能创建一个抽象类的实例
+department = new AccountingDepartment(); // 允许对一个抽象子类进行实例化和赋值
+department.printName();
+department.printMeeting();
+// 在抽象父类中没有 generateReports 方法
+// department.generateReports();
+
+// 构造函数
+class GreeterConstructor {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    return 'Hello, ' + this.greeting;
+  }
+}
+
+let greeterCons: GreeterConstructor;
+greeterCons = new Greeter('world');
+console.log(greeterCons.greet()); // Hello, world
