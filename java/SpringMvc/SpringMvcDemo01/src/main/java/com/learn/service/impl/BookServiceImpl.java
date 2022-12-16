@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class BookServiceImpl implements BookService {
 
-    //调用dao层的操作，设置一个set接口，方便Spring管理
+    //调用 dao 层的操作，设置一个 set 接口，方便 Spring 管理
     private BookMapper bookMapper;
 
     public void setBookMapper(BookMapper bookMapper) {

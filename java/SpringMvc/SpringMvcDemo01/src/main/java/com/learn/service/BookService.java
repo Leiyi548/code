@@ -9,18 +9,18 @@ import java.util.List;
  * @date 2022/10/10 21:15
  */
 public interface BookService {
-    //增加一个Book
+    //增加一个 Book
     int addBook(Book book);
 
-    //根据id删除一个Book
+    //根据 id 删除一个 Book
     int deleteBookById(int id);
 
-    //更新Book
+    //更新 BookBook
     int updateBook(Book books);
 
-    //根据id查询,返回一个Book
+    //根据 id 查询，返回一个 Book 个 Book
     Book queryBookById(int id);
 
-    //查询全部Book,返回list集合
+    //查询全部 Book，返回 list 集合
     List<Book> queryAllBook();
 }
